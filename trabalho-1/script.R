@@ -3,9 +3,15 @@
 ##    Henrique Fochesatto <hfochesatto@inf.ufsm.br>
 
 
-library(tools)
-library(arules)
-
+gerenciar_pacotes <- function(pacotes) {
+  pacotes_instalados <- pacotes %in% rownames(installed.packages())
+  
+  if (any(pacotes_instalados == FALSE)) {
+    install.packages(pacotes[!pacotes_instalados])
+  }
+  
+  invisible(lapply(pacotes, library, character.only = TRUE))
+}
 
 achar_nomes_unicos <- function(df, distancia_minima_aceitacao) {
   nomes <- unique(toTitleCase(trimws(unlist(strsplit(df$Jogadore.a.s, ", ")))))
@@ -56,6 +62,11 @@ one_hot_encode <- function(df) {
   
   return(z)
 }
+
+
+pacotes <- c("tools", "arules")
+
+gerenciar_pacotes(pacotes)
 
 
 csv_1 <- read.csv("http://www-usr.inf.ufsm.br/~joaquim/UFSM/DM/ds/_ASSOC_BGFriends_01.csv")
