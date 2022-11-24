@@ -15,7 +15,7 @@ achar_nomes_unicos <- function(df, distancia_minima_aceitacao) {
     distancias <- adist(nomes[i], nomes_unicos, ignore.case = TRUE)
     distancias <- distancias[distancias != 0]
     
-    if (min(distancias) >= distancia_minima_aceitacao) {
+    if (length(distancias) == 0 || min(distancias) >= distancia_minima_aceitacao) {
       nomes_unicos <- append(nomes_unicos, nomes[i])
     }
   }
@@ -25,6 +25,7 @@ achar_nomes_unicos <- function(df, distancia_minima_aceitacao) {
 
 achar_nome_correspondente <- function(nome, nomes) {
   distancias <- adist(nome, nomes, ignore.case = TRUE)
+
   return(nomes[match(min(distancias), distancias)])
 }
 
@@ -42,9 +43,7 @@ one_hot_encode <- function(df) {
     
     for (j in 1:length(nomes_celula)) {
       nome_processado <- achar_nome_correspondente(nomes_celula[j], nomes_unicos)
-      
       indice_coluna <- match(nome_processado, nomes_unicos)
-      
       z[i, indice_coluna] <- 1
     }
     
