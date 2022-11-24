@@ -76,7 +76,7 @@ regras_melhor_jogador <- subset(regras_simples, size(lhs) == 1 & lhs %pin% "=1" 
 
 regras_duplas <- apriori(df, parameter = list(target = "rules", supp = 0.1, conf = 0.7))
 
-regras_melhor_dupla <-  subset(regras_duplas, size(lhs) == 2 & !(lhs %pin% "=0") & rhs %in% "Vitoria=1")
+regras_melhor_dupla <- subset(regras_duplas, size(lhs) == 2 & !(lhs %pin% "=0") & rhs %in% "Vitoria=1")
 
 regras_pior_dupla <- subset(regras_duplas, size(lhs) == 2 & !(lhs %pin% "=0") & rhs %in% "Vitoria=0")
 
